@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  vehicles:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vehicles
+    ports:
+      - 8080:8080
+    volumes:
+      - ./log:/var/log
+    environment:
+      spring.datasource.url: jdbc:mysql://mysql:3306/fleet_service?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&lowerCaseTableNames=true
+      spring.datasource.username: root
+      spring.datasource.password: secret
+
+    depends_on:
+      - mysql
+
+  mysql:
+    image: library/mysql:5.7
+    healthcheck:
+      test: mysql --protocol=socket -hlocalhost -uroot -p$$MYSQL_ROOT_PASSWORD -e 'SELECT 1'
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: fleet_service
+
+    ports:
+      - "3306:3306"
+
+    command: mysqld --sql_mode=""
+
+volumes:
+  my-datavolume:
