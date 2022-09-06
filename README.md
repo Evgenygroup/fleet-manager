@@ -24,5 +24,5 @@ Run in the project directory:
 ```
 docker-compose up --build -d
 ```
-Once the application is up and running it can be seen on localhost http://localhost:8080/. Its endpoints will also be exposed at http://localhost:8080/swagger-ui.html
+Once the application is up and running its endpoints will be exposed at http://localhost:8080/swagger-ui.html
 
