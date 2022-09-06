@@ -89,7 +89,7 @@ public class VehicleControllerTest {
     }
 
     @Test
-    public void testGetVehicleById_not_found() throws Exception {
+    public void testGetVehicleById_notFound() throws Exception {
         Long fakeId = 123456L;
         when(service.getVehicleById(fakeId))
                 .thenThrow(new VehicleNotFoundException(fakeId));
@@ -114,7 +114,7 @@ public class VehicleControllerTest {
                 .content("{\"name\": \"Mercedes\"}")
                 .content("{\"vin\": \"ERT567567484w4\"}")
                 .content("{\"licensePlateNumber\": \"WER123\"}")
-                .content("{\"properties\":\"{\"colour\":\"red\"}\" }")
+                .content("{\"properties\":\"{\"colour\":\"red\"}\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andDo(print())
@@ -125,7 +125,7 @@ public class VehicleControllerTest {
     }
 
     @Test
-    public void removeVehicleByIdSuccess() throws Exception {
+    public void removeVehicleById_success() throws Exception {
         Long id = 123L;
         mvc.perform(delete("/api/vehicles/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -135,7 +135,7 @@ public class VehicleControllerTest {
     }
 
     @Test
-    public void removeVehicleByIdNotFound() throws Exception {
+    public void removeVehicleById_notFound() throws Exception {
         Long fakeId = 123L;
         doThrow(new VehicleNotFoundException(fakeId)).when(service).deleteVehicleById(fakeId);
         mvc.perform(delete("/api/vehicles/{id}", fakeId)

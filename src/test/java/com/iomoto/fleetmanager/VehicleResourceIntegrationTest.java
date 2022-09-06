@@ -21,22 +21,6 @@ public class VehicleResourceIntegrationTest {
     private MockMvc mvc;
 
     @Test
-    public void testCreateNewVehicle() throws Exception {
-
-        mvc.perform(post("/api/vehicles")
-                .content("{\"name\": \"Mercedes\"}")
-                .content("{\"vin\": \"ERT567567484w4\"}")
-                .content("{\"licensePlateNumber\": \"WER123\"}")
-                //   .content("{\"properties\": \"colour\":\"red\"}")
-                .content("{\"properties\":\"{\"colour\":\"red\"}\" }")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.id").exists())
-                .andExpect(jsonPath("$.name").exists());
-    }
-
-    @Test
     public void testGetVehicles() throws Exception {
 
         mvc.perform(get("/api/vehicles")
@@ -44,7 +28,10 @@ public class VehicleResourceIntegrationTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$[0].id").exists())
-                .andExpect(jsonPath("$[0].name").exists());
+                .andExpect(jsonPath("$[0].name").exists())
+                .andExpect(jsonPath("$[0].vin").exists())
+                .andExpect(jsonPath("$[0].licensePlateNumber").exists())
+                .andExpect(jsonPath("$[0].properties").exists());
     }
 
 
